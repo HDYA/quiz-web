@@ -203,7 +203,7 @@ $(function () {
 
     // Check database connectivity
     $.ajax({
-        utl: config.endpoint.status,
+        url: config.endpoint.status,
         method: 'GET',
         success: function(data) {
             if (data[config.status.connectivity_field_name]) {
