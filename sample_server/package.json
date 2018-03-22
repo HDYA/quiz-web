@@ -1,0 +1,14 @@
+{
+  "name": "open_quiz_platform_sample_server",
+  "version": "0.1.0",
+  "description": "A sample server for Open Quiz Platform by Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "HDYA",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}

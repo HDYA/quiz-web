@@ -1,0 +1,26 @@
+{
+  "name": "Quiz",
+  "authors": [
+    "Chudi"
+  ],
+  "description": "A quiz application demo",
+  "main": "index.html",
+  "keywords": [
+    "quiz",
+    "demo",
+    "microsoft"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "simple-uuid": "^1.0.1"
+  }
+}

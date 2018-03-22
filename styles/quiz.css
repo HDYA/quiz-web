@@ -1,0 +1,167 @@
+body {
+    background-color: cornflowerblue;
+    color: white;
+    display: block;
+}
+
+#submit,
+.user_panel,
+.user_panel div,
+.user_panel input,
+.problem_panel,
+.problem_panel div,
+.score_panel,
+.score_panel div {
+    display: none;
+}
+
+.user_panel,
+.problem_panel,
+.score_panel {
+    display: block;
+    margin: 0 auto;
+}
+
+.user_panel,
+.score_panel {
+    font-size: 3vh;
+    width: 8em;
+    margin: 35vh auto 0;
+}
+
+.user_panel input {
+    display: inline-block;
+    background-color: cornflowerblue;
+    color: white;
+    border: 1px solid grey !important;
+    padding-left: 3px;
+    font-size: 3vh;
+}
+
+.user_panel div#uid {
+    color: lightgray;
+    font-size: 1vh;
+    width: 22em;
+}
+
+.user_panel div#uid:before {
+    content: "uid: ";
+}
+
+#submit {
+    position: relative;
+    background-color: aqua;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    font-size: 2.5vh;
+    padding: 0.5vh;
+    width: 5em;
+    margin: 15vh auto 0;
+}
+
+#count_down {
+    display: none;
+    position: fixed;
+    font-size: 10vh;
+    color: darkgreen;
+    width: 0;
+    text-align: center;
+    left: 50%;
+    top: 10vh;
+}
+
+.problem_panel {
+}
+
+.problem_panel div {
+    width: 50%;
+    position: fixed;
+    left: 25%;
+}
+
+.problem_panel .question {
+    top: 23vw;
+    font-size: 3vh;
+}
+
+.problem_panel .question:after {
+    content: '?';
+}
+
+.problem_panel div.options {
+    top: 50vh;
+}
+
+.problem_panel div.options div {
+    position: relative;
+    float: left;
+    margin-top: 4vh;
+    left: 0;
+    width: 100%;
+    height: 7vh;
+    line-height: 7vh;
+    font-size: 3vh;
+    background-color: grey;
+    padding-left: 1em;
+    filter: alpha(Opacity=75);
+    -moz-opacity: 0.75;
+    opacity: 0.75;
+}
+
+.problem_panel div.options div:hover {
+    background-color: darkgray;
+    filter: alpha(Opacity=100);
+    -moz-opacity: 1;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.problem_panel div.options div.true,
+.problem_panel div.options div.false {
+    filter: alpha(Opacity=95);
+    -moz-opacity: 0.95;
+    opacity: 0.95;
+}
+
+.problem_panel div.options div.true,
+.problem_panel div.options div.true:hover {
+    background-color: green!important;
+}
+
+.problem_panel div.options div.true:before {
+    content: '√';
+}
+
+.problem_panel div.options div.false,
+.problem_panel div.options div.false:hover {
+    background-color: red!important;
+}
+
+.problem_panel div.options div.false:before {
+    content: 'X';
+}
+
+.problem_panel div.options div:nth-child(1) {
+    margin-top: 0;
+}
+
+.problem_panel div.options div:nth-child(1):before {
+    content:"A. ";
+}
+
+.problem_panel div.options div:nth-child(2):before {
+    content:"B. ";
+}
+
+.problem_panel div.options div:nth-child(3):before {
+    content:"C. ";
+}
+
+.problem_panel div.options div:nth-child(4):before {
+    content:"D. ";
+}
+
+.score_panel div:nth-of-type(2) {
+    width: 10em;
+}
