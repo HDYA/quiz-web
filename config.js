@@ -13,6 +13,9 @@ var config = {
             button: "Play Again"
         }
     },
+    status: {
+        connectivity_field_name: "databaseConnected",
+    },
     animation: {
         fadeIn: 300,
         fadeOut: 300,
@@ -32,7 +35,8 @@ var config = {
     },
     endpoint: {
         user: '/api/user',
-        problem: '/api/problems/0'
+        problem: '/api/problems/0',
+        status: '/api/status',
     },
     quiz: {
         problem_count: 3,

@@ -201,6 +201,21 @@ $(function () {
 
     $score_panel.hide();
 
+    // Check database connectivity
+    $.ajax({
+        utl: config.endpoint.status,
+        method: 'GET',
+        success: function(data) {
+            if (data[config.status.connectivity_field_name]) {
+                $('.connectivity').fadeOut();
+                console.log('Database connected');
+            } else {
+                console.log('Database NOT connected');
+            }
+        },
+        // TODO: ERROR HANDLE
+    });
+
     // Fetch UID from HTML5 local storage
     var uid = window.localStorage['uid'];
     if (!uid) {
