@@ -34,7 +34,7 @@ var config = {
         }
     },
     endpoint: {
-        user: '/api/users',
+        user: '/api/users/',
         problem: '/api/problems/0',
         status: '/api/status',
     },

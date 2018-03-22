@@ -59,6 +59,7 @@ function nextProblem() {
                         .click(function() {
                             // Hide score panel and display start page
                             $submit.fadeOut();
+                            $input.hide();
                             $score_panel.fadeOut(config.animation.fadeOut, function() {
                                 $userpanel.show();
                                 $username.fadeIn(config.animation.fadeIn);
@@ -248,16 +249,17 @@ $(function () {
                 // Submit username
                 $.ajax({
                     url: config.endpoint.user,
-                    method: 'POST',
+                    method: 'PUT',
                     data: {
                         username: username,
-                        uid: uid
+                        identifier: uid,
                     },
                     success: function () {
                         // On POST success
                         $submit.fadeOut(config.animation.fadeOut);
                         $welcome.fadeOut(config.animation.fadeOut, function () {
                             // After $welcome faded out
+                            $welcome.html(config.text.new_user.notification);
                             window.localStorage['username'] = username;
                             initializeInitialPage();
                         });
@@ -289,3 +291,10 @@ $(function () {
     }
 
 })
+
+// Tool function to reset local storage
+function reset() {
+    delete window.localStorage['uid'];
+    delete window.localStorage['username'];
+    location.reload();
+}
