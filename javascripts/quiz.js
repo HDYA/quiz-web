@@ -249,7 +249,7 @@ $(function () {
                 // Submit username
                 $.ajax({
                     url: config.endpoint.user,
-                    method: 'PUT',
+                    method: 'POST',
                     data: {
                         username: username,
                         identifier: uid,
