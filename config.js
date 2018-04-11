@@ -33,6 +33,10 @@ var config = {
             font_size: 20,
         }
     },
+    retry: {
+        limit: 3,
+        timeout: 1500,
+    },
     endpoint: {
         user: '/api/users/',
         problem: '/api/problems/0',

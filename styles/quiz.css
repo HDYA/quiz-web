@@ -189,3 +189,19 @@ body {
 .score_panel div:nth-of-type(2) {
     width: 10em;
 }
+
+#notification {
+    position: fixed;
+    margin: 5vh auto;
+    padding: 0 2em;
+    top: 50vh;
+    text-align: center;
+    color: white;
+    background-color: lightgray;
+    overflow: visible;
+    text-overflow: clip;
+}
+
+.error {
+    color: red!important;
+}

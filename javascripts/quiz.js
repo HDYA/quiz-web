@@ -2,11 +2,74 @@ var $userpanel, $welcome, $username, $input, $uid;
 var $submit, $countdown;
 var $problem_panel, $question, $options;
 var $score_panel, $congratulation, $score_display, $score_value;
+var $notification;
 
 var submitting = false;
 
 var problemId = 0, answered = false, answer = -1, grades = 0;
-var count_down_interval, startTime, displayedTime;
+var count_down_interval, start_time, displayed_time;
+var notification_shown = false, notification_timeout;
+
+function log(content, isError, keepDisplay) {
+    // Set error
+    if (isError == true) {
+        console.error(content);
+        $notification.addClass('error');
+    } else {
+        console.log(content);
+        $notification.removeClass('error');
+    }
+
+    // Set notification content
+    $notification.html(content);
+
+    // Show notification if it is not shown
+    if (!notification_shown) {
+        notification_shown = true;
+        $notification
+            .css("left", (window.innerWidth - $notification.width()) >> 1)
+            .fadeIn(config.animation.fadeIn);
+        // Set timeout to hide notification if we have no intention to keep it
+        if (!keepDisplay) {
+            notification_timeout = setTimeout(function() {
+                $notification.fadeOut(config.animation.fadeOut, function() {
+                    notification_shown = false;
+                });
+            }, 1000);
+        }
+    } else {
+        // Clear timeout if we need to keep the notification
+        if (keepDisplay) {
+            clearTimeout(notification_timeout);
+        }
+    }
+}
+
+function ajaxWithRetry(ajaxConfig, retryLimit, retryCount) {
+    // Default retry limit
+    if (!retryLimit) {
+        retryLimit = config.retry.limit;
+    }
+    if (!retryCount) {
+        retryCount = 1;
+    }
+    // Set retry
+    ajaxConfig.error = function(err) {
+        if (retryCount < retryLimit) {
+            log(err.responseJSON.Message + ' | Retry #' + retryCount, true, false);
+            console.error('Retry number ' + retryCount);
+            setTimeout(function() {
+                ajaxWithRetry(ajaxConfig, retryLimit, retryCount + 1);
+            }, config.retry.timeout)
+        } else {
+            log(err.responseJSON.Message, true, true);
+            console.error('Stop retrying');
+        }
+    }
+
+    // Invoke call
+    $.ajax(ajaxConfig);
+}
 
 function initializeInitialPage() {
     $welcome.fadeIn(config.animation.fadeIn);
@@ -73,7 +136,7 @@ function nextProblem() {
     }
 
     // Query next problem
-    $.ajax({
+    ajaxWithRetry({
         url: config.endpoint.problem,
         method: 'GET',
         success: function(data) {
@@ -88,18 +151,18 @@ function nextProblem() {
                 .fadeIn(config.animation.fadeIn);
 
             // Start count down
-            startTime = Date.now();
-            displayedTime = config.quiz.count_down;
-            $countdown.html(displayedTime);
+            start_time = Date.now();
+            displayed_time = config.quiz.count_down;
+            $countdown.html(displayed_time);
             $countdown.show({
                 duration: 100,
                 complete: function() {
                     count_down_interval = setInterval(function () {
-                        var currentTime = config.quiz.count_down - Math.ceil((Date.now() - startTime) / 1000) + 1;
-                        if (currentTime != displayedTime) {
+                        var currentTime = config.quiz.count_down - Math.ceil((Date.now() - start_time) / 1000) + 1;
+                        if (currentTime != displayed_time) {
                             // Show next number
                             // console.log(currentTime);
-                            displayedTime = currentTime;
+                            displayed_time = currentTime;
                             $countdown.hide({
                                 duration: 100,
                                 complete: function() {
@@ -145,7 +208,6 @@ function nextProblem() {
             });
         },
     });
-    // TODO: ERROR HANDLE
 
     // Hide user panel
     $userpanel.fadeOut();
@@ -167,7 +229,7 @@ function selectOption(index) {
     if (index == answer) {
         // TODO FIX √ X
         $($options.children()[index]).addClass('true');
-        var delta = config.quiz.score_base + config.quiz.score_time_bonus * displayedTime;
+        var delta = config.quiz.score_base + config.quiz.score_time_bonus * displayed_time;
         console.log(delta);
         grades += delta;
     } else {
@@ -200,10 +262,13 @@ $(function () {
     $congratulation = $('.score_panel div:nth-of-type(1)');
     $score_display = $('.score_panel div:nth-of-type(2)');
 
+    $notification = $("#notification");
+
     $score_panel.hide();
+    $notification.hide();
 
     // Check database connectivity
-    $.ajax({
+    ajaxWithRetry({
         url: config.endpoint.status,
         method: 'GET',
         success: function(data) {
@@ -214,7 +279,6 @@ $(function () {
                 console.log('Database NOT connected');
             }
         },
-        // TODO: ERROR HANDLE
     });
 
     // Fetch UID from HTML5 local storage
@@ -247,7 +311,7 @@ $(function () {
                 username = $input.val();
 
                 // Submit username
-                $.ajax({
+                ajaxWithRetry({
                     url: config.endpoint.user,
                     method: 'PUT',
                     data: {
@@ -269,7 +333,6 @@ $(function () {
                         submitting = false;
                     }
                 });
-                // TODO: ERROR HANDLE
             });
 
         $welcome.fadeIn();
