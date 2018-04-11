@@ -313,7 +313,7 @@ $(function () {
                 // Submit username
                 ajaxWithRetry({
                     url: config.endpoint.user,
-                    method: 'PUT',
+                    method: 'POST',
                     data: {
                         username: username,
                         identifier: uid,
