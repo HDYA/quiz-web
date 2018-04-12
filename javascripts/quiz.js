@@ -276,6 +276,13 @@ $(function () {
                 $('.connectivity').fadeOut();
                 console.log('Database connected');
             } else {
+                if (config.status.block_login_without_database) {
+                    $input.attr('disabled', 'true');
+                    $submit
+                        .unbind("click")
+                        .attr('disabled', 'true');
+                    log('Database not connected, login blocked.', true, true);
+                }
                 console.log('Database NOT connected');
             }
         },
