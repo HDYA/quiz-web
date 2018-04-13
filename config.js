@@ -15,7 +15,7 @@ var config = {
     },
     status: {
         connectivity_field_name: "databaseConnected",
-        block_login_without_database: false,
+        block_login_without_database: true,
     },
     animation: {
         fadeIn: 300,
