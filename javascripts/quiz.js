@@ -1,4 +1,4 @@
-var $userpanel, $welcome, $username, $input, $uid;
+var $userPanel, $welcome, $username, $input, $uid;
 var $submit, $countdown;
 var $problem_panel, $question, $options;
 var $score_panel, $congratulation, $score_display, $score_value;
@@ -124,7 +124,7 @@ function nextProblem() {
                             $submit.fadeOut();
                             $input.hide();
                             $score_panel.fadeOut(config.animation.fadeOut, function() {
-                                $userpanel.show();
+                                $userPanel.show();
                                 $username.fadeIn(config.animation.fadeIn);
                                 $uid.fadeIn(config.animation.fadeIn);
                                 initializeInitialPage();
@@ -157,8 +157,16 @@ function nextProblem() {
             $countdown.show({
                 duration: 100,
                 complete: function() {
+                    if (count_down_interval != null) {
+                        clearInterval(count_down_interval);
+                    }
                     count_down_interval = setInterval(function () {
                         var currentTime = config.quiz.count_down - Math.ceil((Date.now() - start_time) / 1000) + 1;
+                        if (currentTime < 0) {
+                            clearInterval(count_down_interval);
+                            count_down_interval = null;
+                            return;
+                        }
                         if (currentTime != displayed_time) {
                             // Show next number
                             // console.log(currentTime);
@@ -210,7 +218,7 @@ function nextProblem() {
     });
 
     // Hide user panel
-    $userpanel.fadeOut();
+    $userPanel.fadeOut();
     $submit.fadeOut();
 }
 
@@ -223,6 +231,7 @@ function selectOption(index) {
 
     // Stop timer
     clearInterval(count_down_interval);
+    count_down_interval = null;
 
     // Determine answer
     console.log(index == answer);
@@ -243,7 +252,7 @@ function selectOption(index) {
 
 $(function () {
     // console.log(config);
-    $userpanel = $('.user_panel');   
+    $userPanel = $('.user_panel');
 
     $welcome = $('.user_panel div#welcome');
     $username = $('.user_panel div#username');
