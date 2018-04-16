@@ -3,11 +3,11 @@ var config = {
         new_user: {
             description: "Please choose a username",
             button: "Confirm",
-            notification: "Welcome",
+            notification: "Welcome to .net quiz game, powered by ASP.NET",
         },
         existing_user: {
             button: "Start",
-            notification: "Welcome back",
+            notification: "Welcome back to .net quiz game, powered by ASP.NET",
         },
         play_again: {
             button: "Play Again"

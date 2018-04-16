@@ -27,7 +27,7 @@ function log(content, isError, keepDisplay) {
     if (!notification_shown) {
         notification_shown = true;
         $notification
-            .css("left", (window.innerWidth - $notification.width()) >> 1)
+            .css("left", (window.innerWidth - $notification.outerWidth()) >> 1)
             .fadeIn(config.animation.fadeIn);
         // Set timeout to hide notification if we have no intention to keep it
         if (!keepDisplay) {

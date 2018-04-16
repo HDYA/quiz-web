@@ -53,6 +53,15 @@ body {
     margin: 35vh auto 0;
 }
 
+.user_panel div#welcome {
+    width: 15em;
+}
+
+.user_panel input,
+.user_panel div#username {
+    margin-top: 2vh;
+}
+
 .user_panel input {
     display: inline-block;
     background-color: cornflowerblue;
@@ -75,6 +84,7 @@ body {
 #submit {
     position: relative;
     background-color: aqua;
+    color: black;
     cursor: pointer;
     text-align: center;
     display: block;
